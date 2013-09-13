@@ -34,13 +34,13 @@ require 'erb'
 require 'ri_cal'
 
 # e.g. output will be suppressed if default is specified
-DEFAULT_TZ = 'Europe/Berlin'
+DEFAULT_TZ = 'America/Los_Angeles'
 
 # see the RiCal docs if Timezones don't work out for you
 ::RiCal::PropertyValue::DateTime::default_tzid = DEFAULT_TZ # :floating
 
 # timespan for filtering (which should really be done by your server/app) and recurrences limitation
-FILTER_SPAN = [Date.today - 90, Date.today + 400]
+FILTER_SPAN = [Date.today - 30, Date.today + 365]
 
 # org-mode ignores weekdays, but it should match for convenience
 # WEEKDAYS = %w{So Mo Di Mi Do Fr Sa} # german weekdays
@@ -161,7 +161,7 @@ end
 
 OrgEventTemplate = ERB.new <<-'EOT', nil, "%<>"
 <%#-*- coding: UTF-8 -*-%>
-* <%= ev.summary %><%= !ev.status.nil? ? ( " (" + ev.status + ")" ) : "" %>
+* <%= ev.summary %>
   :PROPERTIES:
   :ID: <%= ev.uid %>
   :icalCategories: <%= ev.categories.join(" ") %>
@@ -187,9 +187,6 @@ OrgEventTemplate = ERB.new <<-'EOT', nil, "%<>"
 %   end
 % end
   <%# uncomment if you have an edit link: = "[[edit:%s][edit %s]]" % [ev.uid, ev.summary]  %>
-  :ICALENDAR:
-<%= ev %>
-  :END:
 EOT
 
 # this can be used to fix up stuff before the template processing starts
