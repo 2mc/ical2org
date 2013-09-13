@@ -22,7 +22,7 @@
 # copyright and related and neighboring rights to this software to the
 # public domain worldwide. This software is distributed without any
 # warranty.
-# 
+#
 # You should have received a copy of the CC0 Public Domain Dedication
 # along with this software. If not, see
 # http://creativecommons.org/publicdomain/zero/1.0/
@@ -89,7 +89,7 @@ end
 # single-day ical time span?
 def simpleTimeSpan?(tstart, tend)
   return true if tend.nil?
-  tend = fixupEndTime(tend)  
+  tend = fixupEndTime(tend)
   # test date equality
   if (tstart.day == tend.day &&
       tstart.month == tend.month &&
@@ -107,7 +107,7 @@ def orgTimeSpan(tstart, tend, repeaterClause = nil)
   else
     # long notation
     res = orgDateTime(tstart, repeaterClause)
-    
+
     tend = fixupEndTime(tend)
     # use of repeater in spanning date seems impossible in org-mode
     # alterntively, this case could be unfolded
@@ -245,7 +245,7 @@ EOT
 
 # org keywords for ical completion states (see the RFC)
 OrgKeywordForCompleted = {
-  "COMPLETED" => "DONE",  
+  "COMPLETED" => "DONE",
   "CANCELLED" => "CANCELLED",
   "IN-PROCESS" => "TODO",  # in case you have a STARTED state, this is a nice place for it
   "NEEDS-ACTION" => "TODO",
@@ -254,9 +254,9 @@ OrgKeywordForCompleted = {
 
 # evaluate various things available to the template
 def evaluateTodo(todo)
-  { 
+  {
     :orgKeyword => OrgKeywordForCompleted[todo.completed],
-    :orgPrio => (!todo.priority.nil? && todo.priority > 1) ? "#C " : " " 
+    :orgPrio => (!todo.priority.nil? && todo.priority > 1) ? "#C " : " "
   }
 end
 
