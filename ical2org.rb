@@ -167,7 +167,7 @@ OrgEventTemplate = ERB.new <<-'EOT', nil, "%<>"
   :icalCategories: <%= ev.categories.join(" ") %>
   :END:
 % if (!ev.recurs?)
-  <%= orgTimeSpanTZ(ev.dtstart, ev.dtend) %>
+  <%= orgTimeSpan(ev.dtstart, ev.dtend) %>
 % end
 % if (!ev.location.nil?)
   Location: <%= ev.location %>
@@ -280,6 +280,13 @@ comps = RiCal.parse(STDIN)
 # handle events
 comps.each do |cal|
   cal.events.each do |event|
+    # really stupid way to fix my timezone problems
+    if event.dtstart.respond_to?(:new_offset) then
+      event.dtstart = event.dtstart.new_offset(DateTime.now.offset)
+    end
+    if event.dtend.respond_to?(:new_offset) then
+      event.dtend = event.dtend.new_offset(DateTime.now.offset)
+    end
     puts orgEventSection(event) if includeEvent?(event)
   end
 end
